@@ -38,6 +38,9 @@ something portfolio-ready.
 - No need to download the JavaFX SDK separately — the `javafx-maven-plugin`
   pulls the right native jars for your OS from Maven Central.
 
+**Minimum Java version**: The project targets **JDK 17+** and has been
+tested on OpenJDK 21. Use JDK 17 or newer for best compatibility.
+
 ## Build & Run
 
 ```bash
@@ -53,6 +56,30 @@ mvn package
 java -jar target/textor-1.1.0.jar
 ```
 
+Windows & Maven notes
+
+- If you don't have `mvn` on Windows, either install Maven or use a
+  Maven wrapper. Quick install options:
+
+```powershell
+# winget (Windows 10/11)
+winget install Apache.Maven
+
+# chocolatey (requires admin)
+choco install maven -y
+```
+
+You can also run Maven directly from a local install without modifying
+`PATH`, for example:
+
+```powershell
+& "$env:USERPROFILE\Tools\apache-maven-3.9.6\bin\mvn.cmd" javafx:run
+```
+
+Consider adding a Maven Wrapper (`mvnw` / `mvnw.cmd` + `.mvn/wrapper`) to
+the repo so contributors can run `./mvnw javafx:run` without installing
+Maven globally.
+
 ## Project structure
 
 ```
@@ -67,6 +94,56 @@ textor/
         ├── textor.fxml                  # UI layout (menu bar + textarea + statusbar)
         └── textor.css                   # Dark theme stylesheet
 ```
+
+## Packaging & distribution
+
+- The project includes the `maven-shade-plugin` to create an executable
+  jar (`target/textor-<version>.jar`). Note: platform-specific JavaFX
+  native libraries are not always bundled reliably into a simple
+  "fat"-jar; `javafx-maven-plugin` is the recommended way to run during
+  development. For production/native installers consider using
+  `jpackage` or `jlink` to create platform-specific installers that
+  include the required Java runtime and JavaFX native libraries.
+
+## Troubleshooting
+
+- GUI doesn't appear or JavaFX errors: ensure you're running a
+  compatible JDK (17+) and that the `javafx` artifacts downloaded match
+  your OS (the `javafx-maven-plugin` handles this automatically when
+  `mvn` is used).
+- Warnings about restricted/native access or `sun.misc.Unsafe` are
+  emitted by some libraries on newer JDKs — they are typically
+  non-fatal. If you want to suppress these you can run Java with the
+  suggested `--enable-native-access` flags, but prefer testing on the
+  target JDK and platform first.
+- If you get UnsatisfiedLinkError or missing native libs when running a
+  built jar, run with `mvn javafx:run` or build a native package with
+  `jpackage` so native JavaFX binaries are included.
+
+## Tests
+
+- There are no automated tests included by default. If you add tests,
+  run them with:
+
+```bash
+mvn test
+```
+
+## Contributing & Issues
+
+- Contributions are welcome. Please open issues for bugs or feature
+  requests and submit pull requests for fixes.
+- Good first steps for contributors:
+  - Fork the repo and create a feature branch.
+  - Add tests for behavior changes.
+  - Run `mvn -DskipTests=false package` to verify the build.
+
+## Polishing suggestions (optional)
+
+- Add a screenshot or short GIF of the UI in the README to help
+  visitors quickly understand the app.
+- Add a CI badge (GitHub Actions / other) to show build status.
+- Add a `CHANGELOG.md` or release notes link for release history.
 
 ## Keyboard shortcuts
 
