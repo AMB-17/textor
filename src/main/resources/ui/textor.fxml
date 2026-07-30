@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.achraf.textor.TextorController"
+      spacing="0"
+      styleClass="root">
+
+    <MenuBar>
+        <Menu text="File">
+            <MenuItem fx:id="newMenuItem"    text="New"           onAction="#onNew"/>
+            <MenuItem fx:id="openMenuItem"   text="Open..."       onAction="#onOpen"/>
+            <MenuItem fx:id="saveMenuItem"   text="Save"          onAction="#onSave"/>
+            <MenuItem fx:id="saveAsMenuItem" text="Save As..."    onAction="#onSaveAs"/>
+            <SeparatorMenuItem/>
+            <MenuItem fx:id="exitMenuItem"   text="Exit"          onAction="#onExit"/>
+        </Menu>
+
+        <Menu text="Edit">
+            <MenuItem fx:id="undoMenuItem"       text="Undo"        onAction="#onUndo"/>
+            <MenuItem fx:id="redoMenuItem"       text="Redo"        onAction="#onRedo"/>
+            <SeparatorMenuItem/>
+            <MenuItem fx:id="cutMenuItem"        text="Cut"         onAction="#onCut"/>
+            <MenuItem fx:id="copyMenuItem"       text="Copy"        onAction="#onCopy"/>
+            <MenuItem fx:id="pasteMenuItem"      text="Paste"       onAction="#onPaste"/>
+            <MenuItem fx:id="deleteMenuItem"     text="Delete"      onAction="#onDelete"/>
+            <SeparatorMenuItem/>
+            <MenuItem fx:id="selectAllMenuItem"  text="Select All"  onAction="#onSelectAll"/>
+        </Menu>
+
+        <Menu text="Format">
+            <CheckMenuItem fx:id="wrapItem"          text="Word Wrap"   onAction="#onToggleWrap" selected="true"/>
+            <SeparatorMenuItem/>
+            <MenuItem     fx:id="fontSizeUpMenuItem"   text="Bigger Font"  onAction="#onFontUp"/>
+            <MenuItem     fx:id="fontSizeDownMenuItem" text="Smaller Font" onAction="#onFontDown"/>
+        </Menu>
+
+        <Menu text="Help">
+            <MenuItem fx:id="aboutMenuItem" text="About Textor" onAction="#onAbout"/>
+        </Menu>
+    </MenuBar>
+
+    <TextArea fx:id="textArea"
+              VBox.vgrow="ALWAYS"
+              styleClass="editor"
+              wrapText="true"/>
+
+    <HBox styleClass="statusbar">
+        <Label fx:id="statusLabel" text="untitled"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="UTF-8" styleClass="statusbadge"/>
+    </HBox>
+</VBox>
